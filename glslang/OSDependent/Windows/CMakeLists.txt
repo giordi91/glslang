@@ -19,3 +19,12 @@ if(ENABLE_GLSLANG_INSTALL)
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 	install(EXPORT OSDependentTargets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
 endif(ENABLE_GLSLANG_INSTALL)
+
+#copying built lib to the output
+add_custom_command(
+TARGET OSDependent 
+POST_BUILD
+COMMAND ${CMAKE_COMMAND} -E copy
+  $<TARGET_FILE:OSDependent>
+  ${CMAKE_SOURCE_DIR}/../builtDependencies/windows/$<CONFIGURATION>/$<TARGET_FILE_NAME:OSDependent>)		
+

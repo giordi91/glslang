@@ -121,3 +121,21 @@ if(ENABLE_GLSLANG_INSTALL)
         install(FILES ${file} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/glslang/${dir})
     endforeach()
 endif(ENABLE_GLSLANG_INSTALL)
+
+#copying built lib to the output
+add_custom_command(
+TARGET glslang 
+POST_BUILD
+COMMAND ${CMAKE_COMMAND} -E copy
+  $<TARGET_FILE:glslang>
+  ${CMAKE_SOURCE_DIR}/../builtDependencies/windows/$<CONFIGURATION>/$<TARGET_FILE_NAME:glslang>)		
+
+#copying the headers
+file(GLOB HEADER_COPY_PUBLIC "Public/*.h")
+file(COPY ${HEADER_COPY_PUBLIC} DESTINATION ${CMAKE_SOURCE_DIR}/../builtDependencies/includes/glslang/Public)
+
+file(GLOB HEADER_COPY_MI "MachineIndependent/*.h")
+file(COPY ${HEADER_COPY_MI} DESTINATION ${CMAKE_SOURCE_DIR}/../builtDependencies/includes/glslang/MachineIndependent)
+
+file(GLOB HEADER_COPYI "Include/*.h")
+file(COPY ${HEADER_COPYI} DESTINATION ${CMAKE_SOURCE_DIR}/../builtDependencies/includes/glslang/Include)

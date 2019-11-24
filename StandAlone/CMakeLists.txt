@@ -65,3 +65,6 @@ if(ENABLE_GLSLANG_INSTALL)
         install(EXPORT glslang-default-resource-limitsTargets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
     endif()
 endif(ENABLE_GLSLANG_INSTALL)
+#copying the headers
+file(GLOB HEADER_FILES  "*.h")
+file(COPY ${HEADER_FILES} DESTINATION ${CMAKE_SOURCE_DIR}/../builtDependencies/includes/StandAlone)
